@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+import { Analytics } from "@vercel/analytics/next"
 
 const SITE_URL = 'https://www.betawerkz.com.sg'
 const SITE_NAME = 'Beta Werkz'
@@ -130,7 +131,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>{children}</body>
+      <body><Analytics/>{children}</body>
     </html>
   )
 }
