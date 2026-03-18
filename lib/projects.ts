@@ -1,6 +1,4 @@
-const BASE = 'https://www.betawerkz.com.sg/_next/image?url=%2F_next%2Fstatic%2Fmedia%2F'
-const Q = '&w=1920&q=85'
-const img = (f: string) => BASE + f + Q
+const img = (f: string) => `/works/${f}`
 
 export interface ProjectSection {
   label: string
