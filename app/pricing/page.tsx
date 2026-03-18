@@ -26,7 +26,7 @@ const plans = [
       '1 year FREE hosting (not WordPress)',
       '1 year FREE domain name',
       'Live within 3 working days on design sign off',
-      'Professional UI/UX design (not WordPress)',
+      'Professional UI/UX design (not template)',
       'Mobile responsive design',
       'Up to 8 pages',
       'Basic SEO setup',
