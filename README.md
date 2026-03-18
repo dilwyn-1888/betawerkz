@@ -174,3 +174,58 @@ Matches home page exactly: Our Works → Services → Process → Get a Quote �
 
 ### Pricing page responsive classes (inline `<style>`)
 - Hero, plans grid, cards, FAQ, CTA all collapse to single column at `≤768px`
+
+---
+
+## Icons & Favicons (`/public/`)
+Generated from `logo_bw.webp` (RGBA, original 64×64):
+
+| File | Size | Purpose |
+|---|---|---|
+| `favicon.ico` | 16/32/48px multi-size | Browser tab fallback |
+| `icon-16.png` | 16×16 | Browser tab small |
+| `icon-32.png` | 32×32 | Browser tab + bookmarks |
+| `apple-icon.png` | 180×180 | iPhone/iPad home screen |
+
+Referenced in `layout.tsx` under `icons` metadata.
+
+---
+
+## Analytics (`app/layout.tsx`)
+- GA4 Google Analytics tag added (`G-Q8ZB1DVBWZ`)
+- Fires on all pages automatically via the root layout
+- Verify: install Google Tag Assistant Chrome extension or check GA4 → Realtime after deploying
+
+---
+
+## SEO Checklist
+
+### Technical (done ✅)
+- Meta title, description, keywords
+- Open Graph + Twitter Card
+- JSON-LD structured data (ProfessionalService)
+- `sitemap.xml` + `robots.txt` auto-generated
+- Canonical URLs on every page
+- Viewport meta, `lang="en"`
+- OG image 1200×630
+- Favicons + Apple icon
+- GA4 analytics
+- Mobile responsive
+
+### After going live (todo)
+- Submit `sitemap.xml` to Google Search Console
+- Submit `sitemap.xml` to Bing Webmaster Tools
+- Register Google Business Profile (Kaki Bukit address)
+- List on Clutch, GoodFirms, DesignRush, sgbizlist.com.sg
+- Verify GA4 Realtime is tracking
+
+### Ongoing
+- Get client Google reviews
+- Write blog/case study content targeting keywords
+- Monitor Google Search Console weekly (crawl errors, impressions, clicks)
+- Run PageSpeed Insights — keep mobile score above 90
+
+### Target Keywords
+**High intent:** `web development Singapore`, `custom website Singapore`, `website Singapore $888`, `mobile app development Singapore`
+
+**Long-tail:** `fixed price website Singapore`, `SME website package Singapore`, `no WordPress website Singapore`, `workflow digitisation Singapore SME`

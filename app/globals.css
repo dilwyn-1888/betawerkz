@@ -562,6 +562,7 @@ footer{background:var(--void);padding:56px 48px 40px;border-top:1px solid var(--
   #works,#services,#process,#quote{padding:80px 24px}
   #clients{padding:80px 24px;grid-template-columns:1fr;gap:32px}
   .wgrid{grid-template-columns:repeat(2,1fr)}
+  .wcard-img{height:160px}.wcard-img img{width:100%;height:100%;object-fit:cover;display:block}
   .srvgrid{grid-template-columns:1fr 1fr}.srvc.wide{grid-column:span 1}
   .procsteps{grid-template-columns:1fr}.ps{border-right:none;border-bottom:1px solid var(--border)}.ps:last-child{border-bottom:none}
   #quote{grid-template-columns:1fr;gap:40px}
@@ -608,7 +609,9 @@ footer{background:var(--void);padding:56px 48px 40px;border-top:1px solid var(--
 @media(max-width:640px){
   .wgrid,.srvgrid{grid-template-columns:1fr}.srvc.wide{grid-column:span 1}
   .nav-links{display:none}.qrow{grid-template-columns:1fr}
-  .pnext-grid .pncard{flex:0 0 240px}.wcard-img{height:140px}
+  .pnext-grid .pncard{flex:0 0 240px}
+  .wcard-img{height:200px;width:100%;display:block}
+  .wcard-img img{width:100%;height:100%;object-fit:cover;display:block}
   .hero-logo-wrap{width:180px;height:180px}
   .nav-burger{display:flex}
 }
