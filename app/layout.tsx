@@ -9,6 +9,12 @@ const SITE_NAME = 'Beta Werkz'
 const SITE_DESC = 'We build technological platforms that advance your business — web apps, mobile apps, cloud services, and workflow digitisation tailored to your needs.'
 const OG_IMAGE = `${SITE_URL}/og-image.png`
 
+// ─── Meta Pixel ───────────────────────────────────────────────────────────────
+// 1. Go to https://business.facebook.com → Events Manager → Connect Data Sources
+// 2. Choose Web → create a Pixel → copy the numeric Pixel ID (e.g. 1234567890123)
+// 3. Replace YOUR_META_PIXEL_ID below with that number
+const META_PIXEL_ID = 'YOUR_META_PIXEL_ID'
+// ──────────────────────────────────────────────────────────────────────────────
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -137,6 +143,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gtag('js', new Date());
           gtag('config', 'G-Q8ZB1DVBWZ');
         `}} />
+
+        {/* Meta Pixel — replace YOUR_META_PIXEL_ID with your real numeric Pixel ID */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '${META_PIXEL_ID}');
+          fbq('track', 'PageView');
+        `}} />
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+            alt=""
+          />
+        </noscript>
 
         {/* JSON-LD structured data */}
         <script

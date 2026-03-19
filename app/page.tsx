@@ -1,6 +1,7 @@
 import ClientScripts from '@/components/ClientScripts'
 import Works from '@/components/Works'
 import Quote from '@/components/Quote'
+import Testimonials from '@/components/Testimonials'
 import { clientLogos } from '@/lib/clients'
 import { services } from '@/lib/services'
 import { processSteps } from '@/lib/process'
@@ -158,6 +159,10 @@ export default function Home() {
           </a>
         </div>
       </section>
+
+      {/* Testimonials — sits between Process and the Quote form */}
+      <Testimonials />
+
       <Quote />
       <footer>
         <div>
