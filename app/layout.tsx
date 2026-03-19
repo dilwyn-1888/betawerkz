@@ -2,11 +2,13 @@ import React from 'react'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
+import WhatsAppButton from '@/components/WhatsAppButton'
 
 const SITE_URL = 'https://www.betawerkz.com.sg'
 const SITE_NAME = 'Beta Werkz'
 const SITE_DESC = 'We build technological platforms that advance your business — web apps, mobile apps, cloud services, and workflow digitisation tailored to your needs.'
 const OG_IMAGE = `${SITE_URL}/og-image.png`
+
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -126,7 +128,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap"
           rel="stylesheet"
         />
-        {/* Google tag (gtag.js) */}
+
+        {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q8ZB1DVBWZ" />
         <script dangerouslySetInnerHTML={{ __html: `
           window.dataLayer = window.dataLayer || [];
@@ -134,12 +137,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gtag('js', new Date());
           gtag('config', 'G-Q8ZB1DVBWZ');
         `}} />
+
+        {/* JSON-LD structured data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body><Analytics/>{children}</body>
+      <body>
+        <Analytics />
+        {children}
+        <WhatsAppButton />
+      </body>
     </html>
   )
 }
