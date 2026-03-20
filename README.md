@@ -20,25 +20,32 @@ npm run build   # production build
 ```
 betawerkz-fixed/
 ├── public/
-│   └── og-image.png          ← 1200×630 OG social image
+│   ├── og-image.png                  ← 1200×630 OG social image
+│   └── betawerkz-logo.svg            ← Full company logo (NEW)
 ├── app/
 │   ├── globals.css
-│   ├── layout.tsx             ← Full SEO metadata + JSON-LD
-│   ├── page.tsx               ← Home page
-│   ├── sitemap.ts             ← Auto sitemap.xml
-│   ├── robots.ts              ← Auto robots.txt
-│   └── pricing/
-│       └── page.tsx           ← Pricing page
+│   ├── layout.tsx                    ← Full SEO metadata + JSON-LD + Meta Pixel + WhatsApp button
+│   ├── page.tsx                      ← Home page (now includes Testimonials)
+│   ├── sitemap.ts                    ← Auto sitemap.xml
+│   ├── robots.ts                     ← Auto robots.txt
+│   ├── pricing/
+│   │   └── page.tsx                  ← Pricing page
+│   └── api/
+│       └── quote/
+│           └── route.ts              ← Resend email API route (NEW)
 ├── components/
-│   ├── ClientScripts.tsx      ← Cursor, scroll anims, logo, nav, hamburger
-│   ├── Works.tsx              ← Portfolio grid + overlay
-│   └── Quote.tsx              ← Contact form
+│   ├── ClientScripts.tsx             ← Cursor, scroll anims, logo, nav, hamburger
+│   ├── Works.tsx                     ← Portfolio grid + overlay
+│   ├── Quote.tsx                     ← Contact form (wired to Resend)
+│   ├── WhatsAppButton.tsx            ← Floating WhatsApp button (NEW)
+│   └── Testimonials.tsx              ← 3-card testimonials section (NEW)
 ├── lib/
 │   ├── clients.ts
 │   ├── logo.ts
 │   ├── process.ts
 │   ├── projects.ts
 │   └── services.ts
+├── .env.local                        ← Resend credentials (NEW — never commit to git)
 ├── next.config.mjs
 ├── package.json
 └── tsconfig.json
@@ -95,6 +102,7 @@ betawerkz-fixed/
 - Footer contact icons restored: WhatsApp SVG, email SVG, map pin SVG
 - WhatsApp footer link opens in new tab (`target="_blank"`)
 - Hamburger button + mobile drawer added (see Mobile section)
+- `<Testimonials />` added between Process section and Quote form
 
 ---
 
@@ -193,8 +201,9 @@ Referenced in `layout.tsx` under `icons` metadata.
 
 ## Analytics (`app/layout.tsx`)
 - GA4 Google Analytics tag added (`G-Q8ZB1DVBWZ`)
+- Vercel Analytics added (includes heatmaps and session recordings — replaces Hotjar)
+- Meta Pixel added (placeholder `YOUR_META_PIXEL_ID` — replace to activate)
 - Fires on all pages automatically via the root layout
-- Verify: install Google Tag Assistant Chrome extension or check GA4 → Realtime after deploying
 
 ---
 
@@ -215,7 +224,7 @@ Referenced in `layout.tsx` under `icons` metadata.
 ### After going live (todo)
 - Submit `sitemap.xml` to Google Search Console
 - Submit `sitemap.xml` to Bing Webmaster Tools
-- Register Google Business Profile (Kaki Bukit address)
+- Register Google Business Profile (Kaki Bukit address) ✅ Done
 - List on Clutch, GoodFirms, DesignRush, sgbizlist.com.sg
 - Verify GA4 Realtime is tracking
 
@@ -229,3 +238,167 @@ Referenced in `layout.tsx` under `icons` metadata.
 **High intent:** `web development Singapore`, `custom website Singapore`, `website Singapore $888`, `mobile app development Singapore`
 
 **Long-tail:** `fixed price website Singapore`, `SME website package Singapore`, `no WordPress website Singapore`, `workflow digitisation Singapore SME`
+
+---
+
+---
+
+## Session 2 — Awareness & Lead Generation Upgrades
+
+> All changes below were added after the initial build to improve lead capture, trust, and brand awareness.
+
+---
+
+### New & Modified Files
+
+| File | Type | What Changed |
+|------|------|--------------|
+| `app/api/quote/route.ts` | New | Resend email API route |
+| `components/Quote.tsx` | Modified | Wired form to API, toast sizing, phone placeholder, services list, font sizes |
+| `components/WhatsAppButton.tsx` | New | Floating WhatsApp button |
+| `components/Testimonials.tsx` | New | 3-card testimonials section |
+| `app/page.tsx` | Modified | Added `<Testimonials />` between Process and Quote sections |
+| `app/layout.tsx` | Modified | Added WhatsApp button, Meta Pixel, removed Hotjar |
+| `.env.local` | New | Environment variables for Resend |
+| `public/betawerkz-logo.svg` | New | Full company logo |
+
+---
+
+### Quote Form — Resend Email Integration
+
+**Problem:** `Quote.tsx` `handleSubmit()` only showed a toast notification. No data was ever sent or saved.
+
+**Fix:** Created a server-side API route at `app/api/quote/route.ts` that:
+- Receives the form POST from the browser
+- Sends a formatted lead notification email to `info@betawerkz.com.sg`
+- Sends an auto-reply confirmation email to the enquirer
+- Returns an error toast with WhatsApp fallback if sending fails
+
+**Dependencies:**
+```bash
+npm install resend
+```
+
+**Environment variables** — add to `.env.local` and to Vercel dashboard under Settings → Environment Variables:
+```
+RESEND_API_KEY=your_resend_api_key
+RESEND_TO_EMAIL=info@betawerkz.com.sg
+```
+
+> ⚠️ Never commit `.env.local` to git. Rotate your Resend API key at resend.com/api-keys if it was ever exposed.
+
+---
+
+### Quote Form — UI Fixes
+
+- **Toast size** — `fontSize: 16px`, `padding: 20px 32px`, `minWidth: 340px`, `fontWeight: 500` on both success and error toasts
+- **Error toast** — red background with WhatsApp fallback number
+- **Phone placeholder** — changed to `9123 4567`
+- **Input font sizes** — `fontSize: 16px` on all inputs, select, textarea (also prevents mobile browser auto-zoom)
+- **Label font sizes** — `13px` for clean hierarchy
+- **Submit button** — disabled + opacity 0.6 while sending, shows "Sending…" text
+
+**Services list updated to:**
+- Starter
+- Corporate Website
+- Landing Page
+- Workflow Digitization
+- IT Consultations
+- Gen AI Knowledge Sharing *(disabled — coming soon)*
+- Computing Courses *(disabled — coming soon)*
+- Cloud Services
+- Others (Website Feedbacks Welcome)
+
+---
+
+### WhatsApp Floating Button
+
+**File:** `components/WhatsAppButton.tsx`
+
+- Fades in 1.5s after page load
+- Fixed bottom-right, appears on every page via `layout.tsx`
+- Pulsing green ring animation
+- "Chat with us" tooltip on hover
+- Opens WhatsApp with pre-filled message to `+65 9824 3429`
+
+---
+
+### Testimonials Section
+
+**File:** `components/Testimonials.tsx`
+
+- Placed between Process and Quote sections in `app/page.tsx`
+- 3-card grid matching the dark aesthetic — cyan accents, star ratings, gradient initials
+- Currently uses placeholder content
+
+**To replace with real quotes**, edit the `testimonials` array at the top of the file:
+```ts
+const testimonials = [
+  {
+    quote: "Your real client quote here.",
+    name: "Client Name",
+    title: "Their Job Title",
+    company: "Their Company Pte Ltd",
+    initials: "CN",
+  },
+]
+```
+Remove the reminder `<p>` at the bottom of the component once done.
+
+---
+
+### Meta Pixel (Facebook / Instagram Retargeting)
+
+**Added to:** `app/layout.tsx`
+
+**Status:** Script present, using placeholder `YOUR_META_PIXEL_ID`.
+
+**To activate:**
+1. Go to [business.facebook.com](https://business.facebook.com) → Events Manager → Connect Data Sources → Web
+2. Create a Pixel and copy the numeric ID
+3. Replace `YOUR_META_PIXEL_ID` in `app/layout.tsx` and redeploy
+
+---
+
+### Logo
+
+**File:** `public/betawerkz-logo.svg`
+
+- Geometric hex mark with circuit node aesthetic
+- BETA in white, WERKZ in cyan-to-blue gradient
+- Tagline "BRAINS AT WORK", Chinese name 百微网络技术, Est. 2017 pill
+- SVG — scales to any size, use on letterheads, email signatures, proposals
+
+---
+
+### Singapore Directories — Action Items
+
+| Directory | Portal | Status |
+|-----------|--------|--------|
+| Google Business Profile | business.google.com | ✅ Verified |
+| SME Go Digital PSG | smegoportal.gov.sg | ⏳ Apply — highest priority |
+| IMDA Tech Provider | ctoas.sg | ⏳ Prerequisite for PSG |
+| GoBusiness / eStartup | gobusiness.gov.sg | ⏳ ~30 min setup |
+| Clutch.co | clutch.co | ⏳ Free listing + 3 client reviews |
+
+**PSG tip:** Approval unlocks co-funding for your clients — SMEs can get up to 50% of your project cost covered by grants, which dramatically changes the quality of inbound leads.
+
+---
+
+### Complete Status
+
+| Item | Status | Notes |
+|------|--------|-------|
+| Quote form API (Resend) | ✅ Live | Rotate API key if exposed |
+| Quote form UI fixes | ✅ Live | |
+| WhatsApp floating button | ✅ Live | |
+| Testimonials section | ✅ Live | Replace placeholders |
+| Meta Pixel | ⏳ Pending | Replace `YOUR_META_PIXEL_ID` |
+| Google Business Profile | ✅ Verified | |
+| Vercel Analytics + heatmaps | ✅ Live | |
+| Google Analytics 4 | ✅ Live | |
+| SME Go Digital PSG | ⏳ Pending | Manual application |
+| IMDA listing | ⏳ Pending | Manual application |
+| GoBusiness directory | ⏳ Pending | ~30 min |
+| Clutch.co profile | ⏳ Pending | Free + 3 reviews |
+| Logo | ✅ Done | `public/betawerkz-logo.svg` |
